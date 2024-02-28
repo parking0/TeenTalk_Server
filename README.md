@@ -9,6 +9,8 @@ SNS상에서 이루어지는 청소년들의 언어폭력을 사전에 방지하
 
 
 ### Demonstration
+[이 곳에서 프로젝트에 관한 자세한 설명을 영상으로 확인하세요.](https://www.youtube.com/watch?v=LhQGkBcLEIU&t=4s)
+
 ![Screenshot 2024-02-28 at 10 34 56 PM](https://github.com/parking0/TeenTalk_Server/assets/67892502/444fac58-4c66-4a8d-8955-8d9e603d3aa8)
 
 ### Tool
