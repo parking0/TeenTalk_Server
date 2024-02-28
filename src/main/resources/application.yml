@@ -1,0 +1,33 @@
+# MySQL
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #url: jdbc:mysql://db-mysql:3306/mydb?useSSL=false
+    #url: jdbc:mysql://0.0.0.0:3306/teen_db?
+    url: jdbc:mysql://mysql_db:3306/teen_db?useSSL=false
+    #url: jdbc:mysql://localhost:3306/test2
+    #username: root
+    username: user
+    password: 123456
+
+  # spring data jpa
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        use-new-id-generator-mappings: false
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+server:
+  port: 8080
+
+# logging
+logging:
+  level:
+    project : debug

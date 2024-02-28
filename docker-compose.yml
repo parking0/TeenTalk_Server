@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  database:
+    container_name: mysql_db
+    image: mysql:8.2.0
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: teen_db      # 이 이름의 데이터베이스 생성
+      #MYSQL_ROOT_HOST: '%'
+      MYSQL_ROOT_HOST: user
+      MYSQL_ROOT_PASSWORD: 123456
+      TZ: 'Asia/Seoul'
+    ports:
+      - "3306:3306"               # 외부로 노출할 포트 지정
+    volumes:
+      #- ./mysql/conf.d:/etc/mysql/conf.d # MySQL 설정 파일 위치
+      - ./db:/var/lib/mysql     # 앞- 로컬 / 뒤 - 컨에티너 내부 경로 => docker-compose up 으로 실행하면 프로젝트의 루트경로에 db 폴더가 생김
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+    networks:
+      - teen                    # 커스텀 네트워크
+
+  application:
+    container_name: teentalk-server-test
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/teen_db?useSSL=false&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      - database        # 스프링부트 실행할 때 데이터베이스 연결을 요청함
+    networks:
+      - teen
+
+  rest_api:
+    image: gj98/test_server:latest
+    container_name: rest_api
+    build: .
+    ports:
+      - "8000:8000"
+    networks:
+      - teen
+
+networks:
+  teen:
